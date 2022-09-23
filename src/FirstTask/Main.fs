@@ -1,90 +1,91 @@
-namespace FirstTask
+module FirstTask
 
-open System.Reflection
+type IGraphVertex =
+    abstract OutgoingEdges : seq<IGraphVertex> with get
 
-module AssemblyInfo =
+type IGraphForwardVertex =
+    //inherit IGraphVertex
+    abstract OutgoingEdges : seq<IGraphForwardVertex> with get
 
-    let metaDataValue (mda: AssemblyMetadataAttribute) = mda.Value
+type IGraphBackwardVertex =
+    //inherit IGraphVertex
+    abstract OutgoingEdges : seq<IGraphBackwardVertex> with get
 
-    let getMetaDataAttribute (assembly: Assembly) key =
-        assembly.GetCustomAttributes(typedefof<AssemblyMetadataAttribute>)
-        |> Seq.cast<AssemblyMetadataAttribute>
-        |> Seq.find (fun x -> x.Key = key)
 
-    let getReleaseDate assembly =
-        "ReleaseDate"
-        |> getMetaDataAttribute assembly
-        |> metaDataValue
+type Vertex (i: int) =
+    let outgoingEdges = ResizeArray<Vertex>()
+    let incomingEdges = ResizeArray<Vertex>()
+    interface IGraphBackwardVertex with
+        member this.OutgoingEdges with get () = incomingEdges |> Seq.cast<IGraphBackwardVertex>
+      //  member this.OutgoingEdges with get () = incomingEdges |> Seq.cast<IGraphVertex>
 
-    let getGitHash assembly =
-        "GitHash"
-        |> getMetaDataAttribute assembly
-        |> metaDataValue
+    member this.IncomingEdges with get() = incomingEdges
+    member this.OutgoingEdges with get() = outgoingEdges
 
-    let getVersion assembly =
-        "AssemblyVersion"
-        |> getMetaDataAttribute assembly
-        |> metaDataValue
+    override this.ToString () = string i
 
-    let assembly = lazy (Assembly.GetEntryAssembly())
+    interface IGraphForwardVertex with
+        member this.OutgoingEdges with get () = outgoingEdges |> Seq.cast<IGraphForwardVertex>
+        //member this.OutgoingEdges with get () = incomingEdges |> Seq.cast<IGraphVertex>
 
-    let printVersion () =
-        let version = assembly.Force().GetName().Version
-        printfn "%A" version
+    interface IGraphVertex with
+        member this.OutgoingEdges with get () =
+            let edges = ResizeArray(outgoingEdges)
+            edges.AddRange incomingEdges
+            edges |> Seq.cast<IGraphVertex>
 
-    let printInfo () =
-        let assembly = assembly.Force()
-        let name = assembly.GetName()
-        let version = assembly.GetName().Version
-        let releaseDate = getReleaseDate assembly
-        let githash = getGitHash assembly
-        printfn "%s - %A - %s - %s" name.Name version releaseDate githash
 
-module Say =
-    open System
 
-    let nothing name = name |> ignore
+let inline f (v:'t when 't:(member OutgoingEdges: seq<'t>)) =
+    (^t :(member OutgoingEdges : seq<'t>)v)
+    //v.OutgoingEdges
+    |> Seq.iter (fun v -> printf $"%A{v}; ")
+    printfn "==="
 
-    let hello name = sprintf "Hello %s" name
 
-    let colorizeIn (color: string) str =
-        let oldColor = Console.ForegroundColor
-        Console.ForegroundColor <- (Enum.Parse(typedefof<ConsoleColor>, color) :?> ConsoleColor)
-        printfn "%s" str
-        Console.ForegroundColor <- oldColor
+(*
+let f (v:IGraphVertex) =
+    v.OutgoingEdges
+    |> Seq.iter (fun v -> printf $"%A{v}; ")
+    printfn "==="
+*)
 
-module Main =
-    open Argu
+let go () =
+    let v1 = Vertex(1)
+    let v2 = Vertex(2)
+    let v3 = Vertex(3)
 
-    type CLIArguments =
-        | Info
-        | Version
-        | Favorite_Color of string // Look in App.config
-        | [<MainCommand>] Hello of string
-        interface IArgParserTemplate with
-            member s.Usage =
-                match s with
-                | Info -> "More detailed information"
-                | Version -> "Version of application"
-                | Favorite_Color _ -> "Favorite color"
-                | Hello _ -> "Who to say hello to"
+    v1.OutgoingEdges.Add v2
+    v2.IncomingEdges.Add v1
+    v2.OutgoingEdges.Add v3
+    v3.IncomingEdges.Add v2
 
-    [<EntryPoint>]
-    let main (argv: string array) =
-        let parser = ArgumentParser.Create<CLIArguments>(programName = "FirstTask")
-        let results = parser.Parse(argv)
+    f (v2:>IGraphForwardVertex)
+    f (v2:>IGraphBackwardVertex)
+    f (v2:>IGraphVertex)
 
-        if results.Contains Version then
-            AssemblyInfo.printVersion ()
-        elif results.Contains Info then
-            AssemblyInfo.printInfo ()
-        elif results.Contains Hello then
-            match results.TryGetResult Hello with
-            | Some v ->
-                let color = results.GetResult Favorite_Color
-                Say.hello v |> Say.colorizeIn color
-            | None -> parser.PrintUsage() |> printfn "%s"
-        else
-            parser.PrintUsage() |> printfn "%s"
+let rec sum x acc =
+    if x = 0
+    then acc
+    else sum (x - 1) (acc + x)
 
-        0
+[<EntryPoint>]
+let main (argv: string array) =
+    (*
+    let x = 1
+    let f y =
+        let x = "ads"
+        let f y = y + 1
+        x.Length + (f y)
+    let r = f x
+    printfn $"res: %A{sum 10 0}"
+    *)
+    let mutable x = 0
+
+    let x = if true then 0 else 8
+
+    //go()
+    //List.go()
+    List._go2()
+    |> printfn "%A"
+    0

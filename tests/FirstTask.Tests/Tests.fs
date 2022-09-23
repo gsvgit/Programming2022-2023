@@ -6,13 +6,29 @@ open FirstTask
 module SayTests =
     [<Tests>]
     let tests =
+        let f _ =
+                  let actualResult = sum 10 0
+                  Expect.equal actualResult 55 "Sum from 10 to 0 should be 55."
         testList
             "samples"
-            [ testCase "Say nothing"
+            [ testCase "First test for sum"
+              <| f
+              testCase "Second test for sum"
               <| fun _ ->
-                  let subject = Say.nothing ()
-                  Expect.equal subject () "Not an absolute unit"
-              testCase "Say hello all"
-              <| fun _ ->
-                  let subject = Say.hello "all"
-                  Expect.equal subject "Hello all" "You didn't say hello" ]
+                  let actualResult = sum 20 0
+                  Expect.equal actualResult 210 "Sum from 10 to 0 should be 55."
+              testProperty "First propertyTest"
+              <| fun x ->
+                  if x > 0
+                  then sum x 0 > 0
+                  elif x = 0
+                  then sum x 0 = 0
+                  else true
+
+              //testProperty "Pow tests"
+              //<| fun x y ->
+                  //pow1 x y = pow2 x y
+
+            ]
+
+
