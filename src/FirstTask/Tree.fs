@@ -1,36 +1,69 @@
 module Tree
 
-type IVisitor =
-    abstract HandleNode: Node -> unit
-    abstract HandleLeaf: Leaf -> unit
+open FSharpx.Collections
 
-and INode =
-    abstract Value: int
-    abstract Handle: IVisitor -> unit
+type BinTree<'value> =
+    | FullNode of value:'value * left: BinTree<'value> * right: BinTree<'value>
+    | NodeWithLeft of value:'value * left: BinTree<'value>
+    | NodeWithRight of value:'value * right: BinTree<'value>
+    | Leaf of value:'value
 
-and Node (value: int, left:INode, right:INode) =
-    member this.Left = left
-    member this.Right = right
+[<RequireQualifiedAccess>]
+type BinTree2<'value> =
+    | Node of value:'value * left: Option<BinTree2<'value>> * right: Option<BinTree2<'value>>
+    //| Leaf of value:'value
 
-    interface INode with
-        member this.Value = value
-        member this.Handle (visitor:IVisitor) = visitor.HandleNode this
+let tree = FullNode(3, BinTree.Leaf(1), NodeWithLeft (4, BinTree.Leaf(2)))
+//let tree2 = BinTree2.Node(3, BinTree2.Leaf(1), Some (BinTree2.Node(4, BinTree2.Leaf(2), None)))
 
-and Leaf (value: int) =
-    interface INode with
-        member this.Value = value
-        member this.Handle (visitor:IVisitor) = visitor.HandleLeaf this
+let rec minInTree tree =
+    match tree with
+    | Leaf v -> v
+    | NodeWithLeft (v,l) -> min v (minInTree l)
+    | NodeWithRight (v,r) -> min v (minInTree r)
+    | FullNode (v,l,r) -> min v (min (minInTree l) (minInTree r))
 
-type ValuesCollector (acc:ResizeArray<_>) =
-    interface IVisitor with
-        member this.HandleNode (node:Node) =
-            acc.Add (node :> INode).Value
-            node.Left.Handle this
-            node.Right.Handle this
-        member this.HandleLeaf (leaf:Leaf) =
-            acc.Add (leaf :> INode).Value
+let rec generateRandomFullTreeOfHeight (randomizer:System.Random) n =
+    if n = 1
+    then Leaf (randomizer.Next())
+    else FullNode (randomizer.Next(),(generateRandomFullTreeOfHeight randomizer (n - 1)), (generateRandomFullTreeOfHeight randomizer (n - 1)))
 
-type Tree =
-    | Leaf of value: int
-    | Node of value:int * left:Tree * right:Tree
+let parallelMin level tree =
+    let rec parallelMinInTree parallelLevel tree =
+        match tree with
+        | Leaf v -> v
+        | NodeWithLeft (v,l) -> min v (parallelMinInTree parallelLevel l)
+        | NodeWithRight (v,r) -> min v (parallelMinInTree parallelLevel r)
+        | FullNode (v,l,r) ->
+            if parallelLevel = 0
+            then min v (min (minInTree l) (minInTree r))
+            else
+                let tasks = [|async {return parallelMinInTree (parallelLevel - 1) l}
+                              async {return parallelMinInTree (parallelLevel - 1) r} |]
+                let results = tasks |> Async.Parallel |> Async.RunSynchronously
+                Array.min results |> min v
+    parallelMinInTree level tree
 
+let parallelMin2 level tree =
+    let valuesFromTopPart = ResizeArray()
+    let rec collectTasks level tree =
+        if level = 0
+        then [async {return minInTree tree}]
+        else
+            match tree with
+            | Leaf v -> [async {return minInTree tree}]
+            | NodeWithLeft (v,l) ->
+                valuesFromTopPart.Add v
+                collectTasks level l
+            | NodeWithRight (v,r) ->
+                valuesFromTopPart.Add v
+                collectTasks level r
+            | FullNode (v,l,r) ->
+                valuesFromTopPart.Add v
+                (collectTasks (level - 1) l) @ (collectTasks (level - 1) r)
+
+    let tasks = collectTasks level tree
+    let valuesFromBottomPart = tasks |> Async.Parallel |> Async.RunSynchronously
+    if valuesFromTopPart.Count > 0
+    then min (Array.min valuesFromBottomPart) (valuesFromTopPart.ToArray() |> Array.min)
+    else Array.min valuesFromBottomPart

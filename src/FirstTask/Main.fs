@@ -1,5 +1,8 @@
 module FirstTask
 
+open System.Buffers
+open OOPList
+
 type IGraphVertex =
     abstract OutgoingEdges : seq<IGraphVertex> with get
 
@@ -10,7 +13,6 @@ type IGraphForwardVertex =
 type IGraphBackwardVertex =
     //inherit IGraphVertex
     abstract OutgoingEdges : seq<IGraphBackwardVertex> with get
-
 
 type Vertex (i: int) =
     let outgoingEdges = ResizeArray<Vertex>()
@@ -71,21 +73,55 @@ let rec sum x acc =
 
 [<EntryPoint>]
 let main (argv: string array) =
+
+    let tree = Tree.generateRandomFullTreeOfHeight (System.Random()) 25 //26 // 27
+
+    let n = 10
+
+    for i in 0..100 do Tree.minInTree tree |> ignore
+
+    let start1 = System.DateTime.Now
+    for i in 0..n-1 do
+        let start = System.DateTime.Now
+        Tree.minInTree tree |> ignore
+        printfn "time: %A" (System.DateTime.Now - start)
+    let finish1 = System.DateTime.Now
+
+    let start2 = System.DateTime.Now
+    for i in 0..n-1 do
+        Tree.minInTree tree |> ignore
+               //Tree.parallelMin 0 tree
+    let finish2 = System.DateTime.Now
+
+    let start3 = System.DateTime.Now
+    for i in 0..n-1 do
+        Tree.minInTree tree |> ignore
+    let finish3 = System.DateTime.Now
+
+
+    printfn "Time 1: %A; Time2: %A; Time3: %A"
+            ((finish1 - start1).TotalMilliseconds / float n)
+            ((finish2 - start2).TotalMilliseconds / float n)
+            ((finish3 - start3).TotalMilliseconds / float n)
+    //let min1 = Tree.parallelMin 0 tree
     (*
-    let x = 1
-    let f y =
-        let x = "ads"
-        let f y = y + 1
-        x.Length + (f y)
-    let r = f x
-    printfn $"res: %A{sum 10 0}"
-    *)
-    let mutable x = 0
+    let n = 10
+    let start1 = System.DateTime.Now
+    for i in 0..n - 1 do
+        Tree.parallelMin 3 tree |> ignore
+    let finish1 = System.DateTime.Now
+    for i in 0..n - 1 do
+        Tree.minInTree tree |> ignore
+    let finish2 = System.DateTime.Now
 
-    let x = if true then 0 else 8
+    for i in 0..n - 1 do
+        Tree.parallelMin2 3 tree |> ignore
+    let finish3 = System.DateTime.Now
 
-    //go()
-    //List.go()
-    List._go2()
-    |> printfn "%A"
+    let parallelTime = ((finish1-start1).TotalMilliseconds / float n)
+    let parallelTime2 = ((finish3-finish2).TotalMilliseconds / float n)
+    let sequentialTime = ((finish2-finish1).TotalMilliseconds / float n)
+
+    printfn "Parallel time: %A ms; Parallel time2: %A ms; Sequential time: %A ms; ratio1: %A; ratio2: %A "  parallelTime parallelTime2 sequentialTime (sequentialTime/parallelTime) (sequentialTime/parallelTime2)
+*)
     0

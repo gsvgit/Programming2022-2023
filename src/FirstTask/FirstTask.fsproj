@@ -15,8 +15,11 @@
     </PropertyGroup>
     <ItemGroup>
         <Compile Include="AssemblyInfo.fs" />
+        <Compile Include="Inline.fs" />
+        <Compile Include="OOPList.fs" />
         <None Include="App.config" />
         <Compile Include="List.fs" />
+        <Compile Include="OptionsResults.fs" />
         <Compile Include="Tree.fs" />
         <Compile Include="Main.fs" />
     </ItemGroup>
