@@ -2,6 +2,7 @@ module FirstTask
 
 open System.Buffers
 open OOPList
+open QSort
 
 type IGraphVertex =
     abstract OutgoingEdges : seq<IGraphVertex> with get
@@ -74,54 +75,13 @@ let rec sum x acc =
 [<EntryPoint>]
 let main (argv: string array) =
 
-    let tree = Tree.generateRandomFullTreeOfHeight (System.Random()) 25 //26 // 27
-
-    let n = 10
-
-    for i in 0..100 do Tree.minInTree tree |> ignore
-
-    let start1 = System.DateTime.Now
-    for i in 0..n-1 do
-        let start = System.DateTime.Now
-        Tree.minInTree tree |> ignore
-        printfn "time: %A" (System.DateTime.Now - start)
-    let finish1 = System.DateTime.Now
-
-    let start2 = System.DateTime.Now
-    for i in 0..n-1 do
-        Tree.minInTree tree |> ignore
-               //Tree.parallelMin 0 tree
-    let finish2 = System.DateTime.Now
-
-    let start3 = System.DateTime.Now
-    for i in 0..n-1 do
-        Tree.minInTree tree |> ignore
-    let finish3 = System.DateTime.Now
-
-
-    printfn "Time 1: %A; Time2: %A; Time3: %A"
-            ((finish1 - start1).TotalMilliseconds / float n)
-            ((finish2 - start2).TotalMilliseconds / float n)
-            ((finish3 - start3).TotalMilliseconds / float n)
-    //let min1 = Tree.parallelMin 0 tree
-    (*
-    let n = 10
-    let start1 = System.DateTime.Now
-    for i in 0..n - 1 do
-        Tree.parallelMin 3 tree |> ignore
-    let finish1 = System.DateTime.Now
-    for i in 0..n - 1 do
-        Tree.minInTree tree |> ignore
-    let finish2 = System.DateTime.Now
-
-    for i in 0..n - 1 do
-        Tree.parallelMin2 3 tree |> ignore
-    let finish3 = System.DateTime.Now
-
-    let parallelTime = ((finish1-start1).TotalMilliseconds / float n)
-    let parallelTime2 = ((finish3-finish2).TotalMilliseconds / float n)
-    let sequentialTime = ((finish2-finish1).TotalMilliseconds / float n)
-
-    printfn "Parallel time: %A ms; Parallel time2: %A ms; Sequential time: %A ms; ratio1: %A; ratio2: %A "  parallelTime parallelTime2 sequentialTime (sequentialTime/parallelTime) (sequentialTime/parallelTime2)
-*)
+    (*let arr = Array.init 10 (fun i -> i)
+    let tmp = Array.zeroCreate 10
+    let myArr = MyArray(arr,0,9)
+    let myTmp = MyArray(tmp,0,9)
+    let p1,p2 = partition myArr myTmp 4
+    printfn $"%A{p1.Memory};  %A{p1.Left};  %A{p1.Right}"
+    printfn $"%A{p2.Memory};  %A{p2.Left};  %A{p2.Right}"
+    *)
+    let res = fastQSort  [|-2; -1; 0|]
     0
