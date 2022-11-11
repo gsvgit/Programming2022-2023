@@ -1,7 +1,6 @@
 namespace FirstTask.Tests
 
 open Expecto
-open FirstTask
 open QSort
 
 module SayTests =
@@ -17,23 +16,23 @@ module SayTests =
               <| fun (arr:array<int>) pivot ->
                   let expectedLeft, expectedRight = Array.partition (fun x -> x <= pivot) arr
                   let actualLeft, actualRight =
-                      let left, right = QSort.partition
-                                            (MyArray(arr,0,arr.Length-1))
-                                            (MyArray(Array.zeroCreate arr.Length, 0, arr.Length-1))
+                      let left, right = partition
+                                            (MyArray(arr, 0, arr.Length))
+                                            (MyArray(Array.zeroCreate arr.Length, 0, arr.Length))
                                             pivot
-                      left.Memory.[left.Left..left.Right],
-                      right.Memory.[right.Left..right.Right]
+                      left.Memory[left.Edge..left.Edge + left.Length - 1],
+                      right.Memory[right.Edge..right.Edge + right.Length - 1]
 
                   Expect.sequenceEqual actualLeft expectedLeft ""
                   Expect.sequenceEqual actualRight (Array.rev expectedRight) ""
-
-              testProperty "Sort is sort"
-              <| fun (arr:array<int>) ->
-                  Expect.sequenceEqual (qSort arr) (Array.sort arr)
-
-              testProperty "FastSort is sort"
-              <| fun (arr:array<int>) ->
-                  Expect.sequenceEqual (fastQSort arr) (Array.sort arr)
+              //
+              // testProperty "Sort is sort"
+              // <| fun (arr:array<int>) ->
+              //     Expect.sequenceEqual (qSort arr) (Array.sort arr)
+              //
+              // testProperty "FastSort is sort"
+              // <| fun (arr:array<int>) ->
+              //     Expect.sequenceEqual (fastQSort arr) (Array.sort arr)
             ]
 
 
