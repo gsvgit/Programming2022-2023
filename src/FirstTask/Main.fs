@@ -83,5 +83,7 @@ let main (argv: string array) =
     printfn $"%A{p1.Memory};  %A{p1.Left};  %A{p1.Right}"
     printfn $"%A{p2.Memory};  %A{p2.Left};  %A{p2.Right}"
     *)
-    let res = fastQSort  [|-2; -1; 0|]
+    // [|-1; 0; 1|]
+    let res = fastQSort [|-3; -1; 0; 0; 0; 1|]
+    printfn $"Sorted: %A{res}"
     0

@@ -1,30 +1,31 @@
 module QSort
 
+[<Measure>]type memoryIndex
+[<Measure>]type arrayIndex
+
 type MyArray<'value> =
     struct
         val Memory: array<'value>
-        val Edge: int
+        val Head: int<memoryIndex>
         val Length: int
 
-        new(memory, edge, length) =
+        new(memory, head, length) =
             { Memory = memory
-              Edge = edge
+              Head = head
               Length = length }
 
-    member this.GetItem i =
-        if i >= this.Length then
+    member this.GetItem (i:int<arrayIndex>) =
+        if int i >= this.Length then
             failwith $"Index %A{i} is out of range."
         else
-            this.Memory[this.Edge + i]
+            this.Memory[int this.Head + int i]
 
-    member this.SetItem i v =
-        if i >= this.Length then
+    member this.SetItem (i:int<arrayIndex>) v =
+        if int i >= this.Length then
             failwith $"Index %A{i} is out of range."
         else
-            this.Memory[ this.Edge + i ] <- v
+            this.Memory[ int this.Head + int i ] <- v
   end
-
-
 
 let qSort (arr: array<'value>) =
     let rec sort (arr: array<'value>) =
@@ -40,27 +41,27 @@ let qSort (arr: array<'value>) =
 
     sort arr
 
-
-
 let partition (myArr: MyArray<_>) (myTmp: MyArray<_>) pivot =
-    let rec loopy left length current =
-        if current < myArr.Length then
+    let rec loopy left right (current: int<arrayIndex>) =
+        if int current < myArr.Length then
 
             if myArr.GetItem current <= pivot then
                 myTmp.SetItem left (myArr.GetItem current)
-                loopy (left + 1) (length - 1) (current + 1)
+                loopy (left + 1<arrayIndex>) right (current + 1<arrayIndex>)
             else
-                myTmp.SetItem (left + length - 1) (myArr.GetItem current)
-                loopy left (length - 1) (current + 1)
+                myTmp.SetItem right (myArr.GetItem current)
+                loopy left (right - 1<arrayIndex>) (current + 1<arrayIndex>)
 
         else
-            let leftLength = left - myTmp.Edge
-            let rightLength = myTmp.Length - leftLength
-            MyArray(myTmp.Memory, myTmp.Edge, leftLength), MyArray(myTmp.Memory, left, rightLength)
+            let leftLength = int left
+            let rightLength = (myTmp.Length - 1) - int right
+            MyArray(myTmp.Memory, myTmp.Head, leftLength), MyArray(myTmp.Memory, (int myTmp.Head + int right + 1) * 1<memoryIndex>, rightLength)
 
-    loopy 0 myArr.Length 0
-
-
+    if myArr.Length > 0
+    then
+        loopy 0<arrayIndex> ((myTmp.Length - 1) * 1<arrayIndex>) 0<arrayIndex>
+    else
+        MyArray(myTmp.Memory,0<memoryIndex>,0),MyArray(myTmp.Memory,0<memoryIndex>,0)
 
 let fastQSort (arr: array<'value>) =
 
@@ -69,23 +70,23 @@ let fastQSort (arr: array<'value>) =
     let rec sort (arr: MyArray<_>) (tmp: MyArray<_>) : MyArray<_> =
 
         if arr.Length > 1 then
-            let pivot = arr.GetItem 0
+            let pivot = arr.GetItem 0<arrayIndex>
 
             let leftPart, rightPart =
-                partition (MyArray(arr.Memory, arr.Edge + 1, arr.Length - 1)) tmp pivot
+                partition (MyArray(arr.Memory, arr.Head + 1<memoryIndex>, arr.Length - 1)) tmp pivot
 
             let sortedLeft =
-                sort leftPart (MyArray(arr.Memory, leftPart.Edge, leftPart.Length))
+                sort leftPart (MyArray(arr.Memory, leftPart.Head, leftPart.Length))
 
             let sortedRight =
-                sort rightPart (MyArray(arr.Memory, rightPart.Edge, rightPart.Length))
+                sort rightPart (MyArray(arr.Memory, rightPart.Head, rightPart.Length))
 
             let res =
-                MyArray(tmp.Memory, sortedLeft.Edge, sortedLeft.Length + 1 + sortedRight.Length)
+                MyArray(arr.Memory, sortedLeft.Head, sortedLeft.Length + 1 + sortedRight.Length)
 
-            res.SetItem sortedLeft.Length pivot
+            res.SetItem (sortedLeft.Length * 1<arrayIndex>) pivot
             res
         else
             arr
 
-    (sort (MyArray(arr, 0, arr.Length)) (MyArray(tmp, 0, tmp.Length))).Memory
+    (sort (MyArray(arr, 0<memoryIndex>, arr.Length)) (MyArray(tmp, 0<memoryIndex>, tmp.Length))).Memory
