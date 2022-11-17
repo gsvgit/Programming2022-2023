@@ -22,6 +22,7 @@
         <Compile Include="OptionsResults.fs" />
         <Compile Include="Tree.fs" />
         <Compile Include="QSort.fs" />
+        <Compile Include="QSortFun.fs" />
         <Compile Include="Main.fs" />
     </ItemGroup>
     <Import Project="..\..\.paket\Paket.Restore.targets" />

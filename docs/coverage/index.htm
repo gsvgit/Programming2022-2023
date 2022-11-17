@@ -14,22 +14,22 @@
 <col />
 </colgroup>
 <tbody>
-<tr><th>Generated on:</th><td>9/16/2022 - 2:47:49 PM</td></tr>
+<tr><th>Generated on:</th><td>18.11.2022 - 2:10:51</td></tr>
 <tr><th>Parser:</th><td>OpenCoverParser</td></tr>
 <tr><th>Assemblies:</th><td>1</td></tr>
-<tr><th>Classes:</th><td>3</td></tr>
-<tr><th>Files:</th><td>1</td></tr>
-<tr><th>Covered lines:</th><td>2</td></tr>
-<tr><th>Uncovered lines:</th><td>44</td></tr>
-<tr><th>Coverable lines:</th><td>46</td></tr>
-<tr><th>Total lines:</th><td>90</td></tr>
-<tr><th>Line coverage:</th><td>4.3% (2 of 46)</td></tr>
-<tr><th>Covered branches:</th><td>0</td></tr>
-<tr><th>Total branches:</th><td>12</td></tr>
-<tr><th>Branch coverage:</th><td>0% (0 of 12)</td></tr>
-<tr><th>Covered methods:</th><td>2</td></tr>
-<tr><th>Total methods:</th><td>14</td></tr>
-<tr><th>Method coverage:</th><td>14.2% (2 of 14)</td></tr>
+<tr><th>Classes:</th><td>7</td></tr>
+<tr><th>Files:</th><td>7</td></tr>
+<tr><th>Covered lines:</th><td>57</td></tr>
+<tr><th>Uncovered lines:</th><td>100</td></tr>
+<tr><th>Coverable lines:</th><td>157</td></tr>
+<tr><th>Total lines:</th><td>401</td></tr>
+<tr><th>Line coverage:</th><td>36.3% (57 of 157)</td></tr>
+<tr><th>Covered branches:</th><td>16</td></tr>
+<tr><th>Total branches:</th><td>64</td></tr>
+<tr><th>Branch coverage:</th><td>25% (16 of 64)</td></tr>
+<tr><th>Covered methods:</th><td>10</td></tr>
+<tr><th>Total methods:</th><td>45</td></tr>
+<tr><th>Method coverage:</th><td>22.2% (10 of 45)</td></tr>
 </tbody>
 </table>
 <h1>Risk Hotspots</h1>
@@ -53,17 +53,38 @@
 <tbody>
 <tr>
 <td>FirstTask</td>
-<td><a href="FirstTask_Main.html">FirstTask.Main</a></td>
-<td title="System.Int32 FirstTask.Main::main(System.String[])"><a href="FirstTask_Main.html#file0_line74">main(...)</a></td><td class="lightgreen right">5</td>
-<td class="lightgreen right">16</td>
-<td class="lightred right">30</td>
+<td><a href="FirstTask_Tree.html">Tree</a></td>
+<td title="a Tree::parallelMin2(System.Int32,Tree/BinTree`1&lt;a&gt;)"><a href="FirstTask_Tree.html#file0_line55">parallelMin2(...)</a></td><td class="lightgreen right">15</td>
+<td class="lightgreen right">4</td>
+<td class="lightred right">240</td>
 </tr>
 <tr>
 <td>FirstTask</td>
-<td><a href="FirstTask_Main.html">FirstTask.Main</a></td>
-<td title="System.String FirstTask.Main/CLIArguments::Argu.IArgParserTemplate.get_Usage()"><a href="FirstTask_Main.html#file0_line66">Argu.IArgParserTemplate.get_Usage()</a></td><td class="lightgreen right">4</td>
-<td class="lightgreen right">4</td>
-<td class="lightred right">20</td>
+<td><a href="FirstTask_Tree.html">Tree</a></td>
+<td title="b Tree/parallelMinInTree@36T::Invoke(System.Int32,Tree/BinTree`1&lt;b&gt;)"><a href="FirstTask_Tree.html#file0_line37">Invoke(...)</a></td><td class="lightgreen right">14</td>
+<td class="lightgreen right">128</td>
+<td class="lightred right">210</td>
+</tr>
+<tr>
+<td>FirstTask</td>
+<td><a href="FirstTask_QSort.html">QSort</a></td>
+<td title="value[] QSort/sort@35::Invoke(value[])"><a href="FirstTask_QSort.html#file0_line35">Invoke(...)</a></td><td class="lightgreen right">9</td>
+<td class="lightgreen right">2</td>
+<td class="lightred right">90</td>
+</tr>
+<tr>
+<td>FirstTask</td>
+<td><a href="FirstTask_Tree.html">Tree</a></td>
+<td title="a Tree::minInTree(Tree/BinTree`1&lt;a&gt;)"><a href="FirstTask_Tree.html#file0_line19">minInTree(...)</a></td><td class="lightgreen right">8</td>
+<td class="lightgreen right">32</td>
+<td class="lightred right">72</td>
+</tr>
+<tr>
+<td>FirstTask</td>
+<td><a href="FirstTask_Tree.html">Tree</a></td>
+<td title="Microsoft.FSharp.Collections.FSharpList`1&lt;Microsoft.FSharp.Control.FSharpAsync`1&lt;a&gt;&gt; Tree/collectTasks@58::Invoke(System.Int32,Tree/BinTree`1&lt;a&gt;)"><a href="FirstTask_Tree.html#file0_line58">Invoke(...)</a></td><td class="lightgreen right">5</td>
+<td class="lightgreen right">8</td>
+<td class="lightred right">30</td>
 </tr>
 </tbody>
 </table>
@@ -86,14 +107,18 @@
 </colgroup>
 <thead><tr><th>Name</th><th class="right">Covered</th><th class="right">Uncovered</th><th class="right">Coverable</th><th class="right">Total</th><th class="center" colspan="2">Line coverage</th><th class="right">Covered</th><th class="right">Total</th><th class="center" colspan="2">Branch coverage</th></tr></thead>
 <tbody>
-<tr><th>FirstTask</th><th class="right">2</th><th class="right">44</th><th class="right">46</th><th class="right">270</th><th title="LineCoverage: 2/46" class="right">4.3%</th><th><table class="coverage"><tr><td class="green covered4">&nbsp;</td><td class="red covered96">&nbsp;</td></tr></table></th><th class="right">0</th><th class="right">12</th><th class="right" title="0/12">0%</th><th><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></th></tr>
-<tr><td><a href="FirstTask_AssemblyInfo.html">FirstTask.AssemblyInfo</a></td><td class="right">0</td><td class="right">22</td><td class="right">22</td><td class="right">90</td><td title="LineCoverage: 0/22" class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td><td class="right">0</td><td class="right">0</td><td class="right" title="-"></td><td><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></td></tr>
-<tr><td><a href="FirstTask_Main.html">FirstTask.Main</a></td><td class="right">0</td><td class="right">18</td><td class="right">18</td><td class="right">90</td><td title="LineCoverage: 0/18" class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td><td class="right">0</td><td class="right">12</td><td class="right" title="0/12">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td></tr>
-<tr><td><a href="FirstTask_Say.html">FirstTask.Say</a></td><td class="right">2</td><td class="right">4</td><td class="right">6</td><td class="right">90</td><td title="LineCoverage: 2/6" class="right">33.3%</td><td><table class="coverage"><tr><td class="green covered33">&nbsp;</td><td class="red covered67">&nbsp;</td></tr></table></td><td class="right">0</td><td class="right">0</td><td class="right" title="-"></td><td><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></td></tr>
+<tr><th>FirstTask</th><th class="right">57</th><th class="right">100</th><th class="right">157</th><th class="right">401</th><th title="LineCoverage: 57/157" class="right">36.3%</th><th><table class="coverage"><tr><td class="green covered36">&nbsp;</td><td class="red covered64">&nbsp;</td></tr></table></th><th class="right">16</th><th class="right">64</th><th class="right" title="16/64">25%</th><th><table class="coverage"><tr><td class="green covered25">&nbsp;</td><td class="red covered75">&nbsp;</td></tr></table></th></tr>
+<tr><td><a href="FirstTask_FirstTask.html">FirstTask</a></td><td class="right">0</td><td class="right">33</td><td class="right">33</td><td class="right">96</td><td title="LineCoverage: 0/33" class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td><td class="right">0</td><td class="right">2</td><td class="right" title="0/2">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="FirstTask_Inline.html">Inline</a></td><td class="right">0</td><td class="right">4</td><td class="right">4</td><td class="right">8</td><td title="LineCoverage: 0/4" class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td><td class="right">0</td><td class="right">0</td><td class="right" title="-"></td><td><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="FirstTask_List.html">List</a></td><td class="right">0</td><td class="right">3</td><td class="right">3</td><td class="right">49</td><td title="LineCoverage: 0/3" class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td><td class="right">0</td><td class="right">2</td><td class="right" title="0/2">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="FirstTask_OOPList.html">OOPList</a></td><td class="right">0</td><td class="right">10</td><td class="right">10</td><td class="right">26</td><td title="LineCoverage: 0/10" class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td><td class="right">0</td><td class="right">4</td><td class="right" title="0/4">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="FirstTask_QSort.html">QSort</a></td><td class="right">39</td><td class="right">9</td><td class="right">48</td><td class="right">101</td><td title="LineCoverage: 39/48" class="right">81.2%</td><td><table class="coverage"><tr><td class="green covered81">&nbsp;</td><td class="red covered19">&nbsp;</td></tr></table></td><td class="right">12</td><td class="right">16</td><td class="right" title="12/16">75%</td><td><table class="coverage"><tr><td class="green covered75">&nbsp;</td><td class="red covered25">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="FirstTask_qSortFun.html">qSortFun</a></td><td class="right">18</td><td class="right">0</td><td class="right">18</td><td class="right">40</td><td title="LineCoverage: 18/18" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right">4</td><td class="right">4</td><td class="right" title="4/4">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="FirstTask_Tree.html">Tree</a></td><td class="right">0</td><td class="right">41</td><td class="right">41</td><td class="right">81</td><td title="LineCoverage: 0/41" class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td><td class="right">0</td><td class="right">36</td><td class="right" title="0/36">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td></tr>
 </tbody>
 </table>
 </coverage-info>
-<div class="footer">Generated by: ReportGenerator 4.8.13.0<br />9/16/2022 - 2:47:49 PM<br /><a href="https://github.com/danielpalme/ReportGenerator">GitHub</a> | <a href="http://www.palmmedia.de">www.palmmedia.de</a></div></div></div>
+<div class="footer">Generated by: ReportGenerator 4.8.13.0<br />18.11.2022 - 2:10:51<br /><a href="https://github.com/danielpalme/ReportGenerator">GitHub</a> | <a href="http://www.palmmedia.de">www.palmmedia.de</a></div></div></div>
 <script type="text/javascript">
 /* <![CDATA[ */
 (function() {
