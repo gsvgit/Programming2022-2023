@@ -224,9 +224,13 @@ var assemblies = [
   {
     "name": "FirstTask",
     "classes": [
-      { "name": "FirstTask.AssemblyInfo", "rp": "FirstTask_AssemblyInfo.html", "cl": 0, "ucl": 22, "cal": 22, "tl": 90, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
-      { "name": "FirstTask.Main", "rp": "FirstTask_Main.html", "cl": 0, "ucl": 18, "cal": 18, "tl": 90, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 12, "lch": [], "bch": [], "hc": [] },
-      { "name": "FirstTask.Say", "rp": "FirstTask_Say.html", "cl": 2, "ucl": 4, "cal": 6, "tl": 90, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
+      { "name": "FirstTask", "rp": "FirstTask_FirstTask.html", "cl": 0, "ucl": 33, "cal": 33, "tl": 96, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 2, "lch": [], "bch": [], "hc": [] },
+      { "name": "Inline", "rp": "FirstTask_Inline.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 8, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
+      { "name": "List", "rp": "FirstTask_List.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 49, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 2, "lch": [], "bch": [], "hc": [] },
+      { "name": "OOPList", "rp": "FirstTask_OOPList.html", "cl": 0, "ucl": 10, "cal": 10, "tl": 26, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 4, "lch": [], "bch": [], "hc": [] },
+      { "name": "QSort", "rp": "FirstTask_QSort.html", "cl": 39, "ucl": 9, "cal": 48, "tl": 101, "ct": "LineCoverage", "mc": "-", "cb": 12, "tb": 16, "lch": [], "bch": [], "hc": [] },
+      { "name": "qSortFun", "rp": "FirstTask_qSortFun.html", "cl": 18, "ucl": 0, "cal": 18, "tl": 40, "ct": "LineCoverage", "mc": "-", "cb": 4, "tb": 4, "lch": [], "bch": [], "hc": [] },
+      { "name": "Tree", "rp": "FirstTask_Tree.html", "cl": 0, "ucl": 41, "cal": 41, "tl": 81, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 36, "lch": [], "bch": [], "hc": [] },
     ]},
 ];
 
@@ -240,18 +244,39 @@ var riskHotspotMetrics = [
 
 var riskHotspots = [
   {
-    "assembly": "FirstTask", "class": "FirstTask.Main", "reportPath": "FirstTask_Main.html", "methodName": "System.Int32 FirstTask.Main::main(System.String[])", "methodShortName": "main(...)", "fileIndex": 0, "line": 74,
+    "assembly": "FirstTask", "class": "Tree", "reportPath": "FirstTask_Tree.html", "methodName": "a Tree::parallelMin2(System.Int32,Tree/BinTree`1<a>)", "methodShortName": "parallelMin2(...)", "fileIndex": 0, "line": 55,
     "metrics": [
-      { "value": 5, "exceeded": false },
-      { "value": 16, "exceeded": false },
-      { "value": 30, "exceeded": true },
+      { "value": 15, "exceeded": false },
+      { "value": 4, "exceeded": false },
+      { "value": 240, "exceeded": true },
     ]},
   {
-    "assembly": "FirstTask", "class": "FirstTask.Main", "reportPath": "FirstTask_Main.html", "methodName": "System.String FirstTask.Main/CLIArguments::Argu.IArgParserTemplate.get_Usage()", "methodShortName": "Argu.IArgParserTemplate.get_Usage()", "fileIndex": 0, "line": 66,
+    "assembly": "FirstTask", "class": "Tree", "reportPath": "FirstTask_Tree.html", "methodName": "b Tree/parallelMinInTree@36T::Invoke(System.Int32,Tree/BinTree`1<b>)", "methodShortName": "Invoke(...)", "fileIndex": 0, "line": 37,
     "metrics": [
-      { "value": 4, "exceeded": false },
-      { "value": 4, "exceeded": false },
-      { "value": 20, "exceeded": true },
+      { "value": 14, "exceeded": false },
+      { "value": 128, "exceeded": false },
+      { "value": 210, "exceeded": true },
+    ]},
+  {
+    "assembly": "FirstTask", "class": "QSort", "reportPath": "FirstTask_QSort.html", "methodName": "value[] QSort/sort@35::Invoke(value[])", "methodShortName": "Invoke(...)", "fileIndex": 0, "line": 35,
+    "metrics": [
+      { "value": 9, "exceeded": false },
+      { "value": 2, "exceeded": false },
+      { "value": 90, "exceeded": true },
+    ]},
+  {
+    "assembly": "FirstTask", "class": "Tree", "reportPath": "FirstTask_Tree.html", "methodName": "a Tree::minInTree(Tree/BinTree`1<a>)", "methodShortName": "minInTree(...)", "fileIndex": 0, "line": 19,
+    "metrics": [
+      { "value": 8, "exceeded": false },
+      { "value": 32, "exceeded": false },
+      { "value": 72, "exceeded": true },
+    ]},
+  {
+    "assembly": "FirstTask", "class": "Tree", "reportPath": "FirstTask_Tree.html", "methodName": "Microsoft.FSharp.Collections.FSharpList`1<Microsoft.FSharp.Control.FSharpAsync`1<a>> Tree/collectTasks@58::Invoke(System.Int32,Tree/BinTree`1<a>)", "methodShortName": "Invoke(...)", "fileIndex": 0, "line": 58,
+    "metrics": [
+      { "value": 5, "exceeded": false },
+      { "value": 8, "exceeded": false },
+      { "value": 30, "exceeded": true },
     ]},
 ];
 

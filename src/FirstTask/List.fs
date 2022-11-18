@@ -7,7 +7,7 @@ type List<'value> =
 let rec map f lst =
     match lst with
     | Empty -> Empty
-    | Cons (hd, tl) -> Cons (f hd, map f tl)
+    | Cons (hd, tl) -> Cons(f hd, map f tl)
 (*
 let go () =
     map ((+)1) (Cons (1,Cons(3,Empty)))
