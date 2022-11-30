@@ -87,10 +87,14 @@ let main (argv: string array) =
     printfn $"%A{p2.Memory};  %A{p2.Left};  %A{p2.Right}"
     *)
     // [|-1; 0; 1|]
+    (*
     let arr = [| -3; -1; 4; -5; 3; 1 |]
     let myArr = MyArray(arr, 0<memoryIndex>, 6)
     let tmp = Array.zeroCreate 6
     let myTmp = MyArray(tmp, 0<memoryIndex>, 6)
     let res = fastQSort arr
-    printfn $"Sorted: %A{res}"
+    printfn $"Sorted: %A{res}"*)
+    let random = System.Random()
+    let data = Array.init 100000 (fun _ -> random.Next())
+    let sorted = QSort.fastQSort data
     0

@@ -17,11 +17,12 @@ type MyArray<'value> =
               Head = head
               Length = length }
 
-        member this.GetItem(i: int<arrayIndex>) =
-            if int i >= this.Length then
-                failwith $"Index %A{i} is out of range."
-            else
-                this.Memory[int this.Head + int i]
+        member this.Item
+            with get (i: int<arrayIndex>) =
+                if int i >= this.Length then
+                    failwith $"Index %A{i} is out of range."
+                else
+                    this.Memory[ int this.Head + int i ]
 
         member this.SetItem (i: int<arrayIndex>) v =
             if int i >= this.Length then
@@ -44,15 +45,16 @@ let qSort (arr: array<'value>) =
 
     sort arr
 
-let partition (myArr: MyArray<_>) (myTmp: MyArray<_>) pivot =
+
+let inline partition (myArr: MyArray<int>) (myTmp: MyArray<_>) pivot =
     let rec loopy left right (current: int<arrayIndex>) =
         if int current < myArr.Length then
 
-            if myArr.GetItem current <= pivot then
-                myTmp.SetItem left (myArr.GetItem current)
+            if myArr[current] <= pivot then
+                myTmp.SetItem left myArr[current]
                 loopy (left + 1<arrayIndex>) right (current + 1<arrayIndex>)
             else
-                myTmp.SetItem right (myArr.GetItem current)
+                myTmp.SetItem right (myArr[current])
                 loopy left (right - 1<arrayIndex>) (current + 1<arrayIndex>)
 
         else
@@ -67,6 +69,34 @@ let partition (myArr: MyArray<_>) (myTmp: MyArray<_>) pivot =
     else
         MyArray(myTmp.Memory, 0<memoryIndex>, 0), MyArray(myTmp.Memory, 0<memoryIndex>, 0)
 
+
+(*
+
+let inline partitionI (myArr: MyArray<int>) (myTmp: MyArray<_>) ([<InlineIfLambda>]predicate) =
+    if myArr.Length > 0 then
+        let mutable left = 0<arrayIndex>
+        let mutable right = ((myTmp.Length - 1) * 1<arrayIndex>)
+        for current = 0 to myArr.Length-1 do
+            let current = current * 1<arrayIndex>
+            if predicate (myArr.GetItem current) then
+                myTmp.SetItem left (myArr.GetItem current)
+                left <- (left + 1<arrayIndex>)
+            else
+                myTmp.SetItem right (myArr.GetItem current)
+                right <- (right - 1<arrayIndex>)
+
+        let leftLength = int left
+        let rightLength = (myTmp.Length - 1) - int right
+
+        MyArray(myTmp.Memory, myTmp.Head, leftLength),
+        MyArray(myTmp.Memory, (int myTmp.Head + int right + 1) * 1<memoryIndex>, rightLength)
+    else
+        MyArray(myTmp.Memory, 0<memoryIndex>, 0), MyArray(myTmp.Memory, 0<memoryIndex>, 0)
+
+
+let inline partition (myArr: MyArray<_>) (myTmp: MyArray<_>) pivot = partitionI myArr myTmp (fun x -> x <= pivot)
+*)
+
 let fastQSort (arr: array<'value>) =
 
     let tmp = Array.zeroCreate arr.Length
@@ -74,7 +104,7 @@ let fastQSort (arr: array<'value>) =
     let rec sort (arr: MyArray<_>) (tmp: MyArray<_>) : MyArray<_> =
 
         if arr.Length > 1 then
-            let pivot = arr.GetItem 0<arrayIndex>
+            let pivot = arr[0<arrayIndex>]
 
             let leftPart, rightPart =
                 partition (MyArray(arr.Memory, arr.Head + 1<memoryIndex>, arr.Length - 1)) tmp pivot
@@ -92,7 +122,7 @@ let fastQSort (arr: array<'value>) =
 
             res
         elif arr.Length = 1 then
-            tmp.SetItem(0<arrayIndex>) (arr.GetItem(0<arrayIndex>))
+            tmp.SetItem(0<arrayIndex>) (arr[0<arrayIndex>])
             arr
         else
             arr

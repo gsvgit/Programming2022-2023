@@ -4,7 +4,7 @@ module qSortFun
 
 open QSort
 
-let f (arr: MyArray<_>) (tmp: MyArray<_>) =
+let copy (arr: MyArray<_>) (tmp: MyArray<_>) =
     for i in 0 .. arr.Memory.Length - 1 do
         arr.Memory[ i ] <- tmp.Memory[i]
 
@@ -15,12 +15,12 @@ let fastQSortFun (arr: array<'value>) =
     let rec sort (arr: MyArray<_>) (tmp: MyArray<_>) : MyArray<_> =
 
         if arr.Length > 1 then
-            let pivot = arr.GetItem 0<arrayIndex>
+            let pivot = arr[0<arrayIndex>]
 
             let leftPart, rightPart =
                 partition (MyArray(arr.Memory, arr.Head + 1<memoryIndex>, arr.Length - 1)) tmp pivot
 
-            f arr tmp
+            copy arr tmp
 
             arr.SetItem(leftPart.Length * 1<arrayIndex>) pivot
 
