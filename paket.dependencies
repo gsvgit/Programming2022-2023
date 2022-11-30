@@ -11,6 +11,7 @@ nuget Packaging.Targets 0.1.208
 
 nuget Expecto.FsCheck
 nuget FSharpx.Collections
+nuget BenchmarkDotNet
 // [ FAKE GROUP ]
 group Build
     storage: none
